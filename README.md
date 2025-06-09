@@ -18,13 +18,44 @@ docker run --rm -v /mnt/user/media:/mnt media-toolbelt rg-albums /mnt
 
 If no command is provided, this README is displayed.
 
-## Included Programs
+## Notable Programs
 
 * `ffmpeg` – versatile audio/video encoder, converter and processing tool
 * `loudgain` – ReplayGain 2.0 scanner and tagger
 * `whipper` – accurate audio CD ripper (Python-based)
 * `sacd_extract` – extracts audio from SACD images
 * `fd` – modern replacement for `find`
+* `mutagen-inspect` – metadata viewer for audio files (based on Mutagen)
+* `flac`, `metaflac` – FLAC encoder and metadata tools
+* `lame` – high-quality MP3 encoder
+* `fdkaac` – high-quality AAC encoder using the Fraunhofer FDK codec
+* `sox` – Swiss Army knife of sound processing
+* `mediainfo` – displays technical and tag information about media files
+
+### mkvtoolnix Tools
+
+These tools are part of the [MKVToolNix](https://mkvtoolnix.download/) suite and are used to inspect, extract, and manipulate Matroska (MKV) container files:
+
+* `mkvmerge` – merge multimedia streams into an MKV container
+* `mkvinfo` – display information about MKV files
+* `mkvextract` – extract tracks and data from MKV files
+
+### libsndfile Tools
+
+These utilities operate on audio files supported by libsndfile (e.g., WAV, FLAC, AIFF):
+
+* `sndfile-cmp` – compare two audio files
+* `sndfile-concat` – concatenate multiple files
+* `sndfile-convert` – convert between formats
+* `sndfile-deinterleave` – split interleaved multichannel files
+* `sndfile-info` – show file format and audio metadata
+* `sndfile-interleave` – combine separate channels into one file
+* `sndfile-metadata-get` – extract metadata
+* `sndfile-metadata-set` – write metadata
+* `sndfile-play` – play audio via ALSA or OSS (if supported)
+* `sndfile-salvage` – try to recover corrupted audio files
+
+> These tools are part of the [libsndfile](http://www.mega-nerd.com/libsndfile/) project.
 
 ## Included Scripts
 

@@ -50,8 +50,9 @@ RUN pacman-key --init \
     && pacman-key --populate archlinux \
     && pacman -Sy --noconfirm --needed \
        bash fish less ca-certificates python python-pip \
-       cdparanoia flac lame sox gpac fd whipper \
+       cdparanoia flac fdkaac lame sox gpac fd whipper \
        ffmpeg taglib libebur128 libcdio libdiscid libsndfile libxml2 \
+       mediainfo mkvtoolnix-cli \
        python-musicbrainzngs python-pycdio python-mutagen \
     && pacman -Scc --noconfirm
 
