@@ -25,7 +25,7 @@ If no command is provided, this README is displayed.
 * `whipper` – accurate audio CD ripper (Python-based)
 * `sacd_extract` – extracts audio from SACD images
 * `fd` – modern replacement for `find`
-* `mutagen-inspect` – metadata viewer for audio files (based on Mutagen)
+* `mutagen-inspect` – metadata viewer for audio files (based on [Mutagen](https://github.com/quodlibet/mutagen))
 * `flac`, `metaflac` – FLAC encoder and metadata tools
 * `lame` – high-quality MP3 encoder
 * `fdkaac` – high-quality AAC encoder using the Fraunhofer FDK codec
