@@ -1,12 +1,12 @@
-#!/usr/bin/env fish
+#!/usr/bin/fish
 
 set -q argv[1]; or set argv[1] $PWD
 
-set files (find $argv[1] -type f \( -iname '*.flac' -o -iname '*.m4a' -o -iname '*.mp3' \))
-
+set files (fd -e flac -e mp3 -e m4a -t f . $argv[1])
 if test (count $files) -gt 0
     echo "🎵 Processing multi-disc album: $argv[1]"
     loudgain --album --noclip --tagmode=e $files
 else
     echo "⏭  No supported audio files found in: $argv[1]"
 end
+

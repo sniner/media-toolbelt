@@ -1,13 +1,21 @@
-#!/usr/bin/env fish
+#!/usr/bin/fish
 
 set -q argv[1]; or set argv[1] $PWD
 
-for dir in $argv[1]/*/
-    set files (find $dir -type f \( -iname '*.flac' -o -iname '*.m4a' -o -iname '*.mp3' \))
+function process_album
+    set files (fd -e flac -e mp3 -e m4a -t f -d 1 . $argv[1])
     if test (count $files) -gt 0
-        echo "🎵 Processing album: $dir"
+        echo "🎵 Processing album: $argv[1]"
         loudgain --album --noclip --tagmode=e $files
-    else
-        echo "⏭  No supported format found in: $dir"
     end
 end
+
+process_album $argv[1]
+
+set subdirs (fd -t d . $argv[1])
+if test (count $subdirs) -gt 0
+    for dir in $subdirs
+        process_album $dir
+    end
+end
+
