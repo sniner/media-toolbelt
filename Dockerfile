@@ -68,4 +68,5 @@ RUN chmod +x /usr/local/bin/*
 # 4) Entrypoint and default command
 COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 COPY README.md /app/README.md
+WORKDIR /mnt
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
