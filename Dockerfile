@@ -57,10 +57,11 @@ RUN pacman-key --init \
     && pacman-key --populate archlinux \
     && pacman -Sy --noconfirm --needed \
        bash fish less ca-certificates python python-pip \
-       cdparanoia flac fdkaac lame sox gpac fd whipper \
+       cdparanoia flac fdkaac lame sox gpac whipper \
        ffmpeg taglib libebur128 libcdio libdiscid libsndfile libxml2 \
-       mediainfo mkvtoolnix-cli cuetools yazi ripgrep fzf glow \
+       mediainfo mkvtoolnix-cli cuetools \
        python-musicbrainzngs python-pycdio python-mutagen \
+       yazi ripgrep fd fzf glow jq 7zip chafa poppler \
     && pacman -Scc --noconfirm \
     && rm -rf /var/cache/pacman/pkg/* \
     && rm -rf /var/lib/pacman/sync/* \
