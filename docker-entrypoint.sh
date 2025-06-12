@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 set -e
 
 # If no arguments are given, display README
 if [ $# -eq 0 ]; then
     if [ -f /app/README.md ]; then
-        cat /app/README.md
+        glow /app/README.md
     else
         echo "No README available"
     fi

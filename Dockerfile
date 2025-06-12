@@ -59,7 +59,7 @@ RUN pacman-key --init \
        bash fish less ca-certificates python python-pip \
        cdparanoia flac fdkaac lame sox gpac fd whipper \
        ffmpeg taglib libebur128 libcdio libdiscid libsndfile libxml2 \
-       mediainfo mkvtoolnix-cli cuetools yazi ripgrep fzf \
+       mediainfo mkvtoolnix-cli cuetools yazi ripgrep fzf glow \
        python-musicbrainzngs python-pycdio python-mutagen \
     && pacman -Scc --noconfirm \
     && rm -rf /var/cache/pacman/pkg/* \
