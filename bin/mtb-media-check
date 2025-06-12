@@ -1,0 +1,7 @@
+#!/usr/bin/fish
+
+set -q argv[1]; or set argv[1] $PWD
+
+for f in (fd -t f -e flac -e mp3 -e m4a . $argv[1])
+    ffmpeg -v error -i "$f" -f null -  && echo "OK:   $f" || echo "FAIL: $f"
+end

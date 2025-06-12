@@ -2,10 +2,10 @@ name: Build and Push Docker image
 
 on:
   push:
-    branches:
-      - main
+    # branches:
+    #   - main
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 jobs:
   build:
@@ -47,4 +47,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-

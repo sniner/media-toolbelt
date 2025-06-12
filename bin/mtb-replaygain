@@ -1,0 +1,54 @@
+#!/usr/bin/fish
+
+set mode "single"
+set path ""
+
+for arg in $argv
+    switch $arg
+        case -a --all
+            set mode "all"
+        case -s --single
+            set mode "single"
+        case -h --help
+            echo "Usage: mtb-replaygain [-a|--all] [-s|--single] [path]"
+            return 0
+        case '*'
+            if test -z "$path"
+                set path $arg
+            else
+                echo "❌ Too many arguments."
+                return 1
+            end
+    end
+end
+
+if test -z "$path"
+    set path $PWD
+end
+
+if test "$mode" = "single"
+    function process_album
+        set files (fd -e flac -e mp3 -e m4a -t f -d 1 . $argv[1])
+        if test (count $files) -gt 0
+            echo "🎵 Processing album: $argv[1]"
+            loudgain --album --noclip --tagmode=e $files
+        end
+    end
+
+    process_album $path
+
+    set subdirs (fd -t d . $path)
+    if test (count $subdirs) -gt 0
+        for dir in $subdirs
+            process_album $dir
+        end
+    end
+else
+    set files (fd -e flac -e mp3 -e m4a -t f . $path)
+    if test (count $files) -gt 0
+        echo "🎵 Processing multi-disc album: $path"
+        loudgain --album --noclip --tagmode=e $files
+    else
+        echo "⏭ No supported audio files found in: $argv[1]"
+    end
+end

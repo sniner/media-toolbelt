@@ -8,7 +8,7 @@ For inspecting dependencies inside the container:
 docker run --rm media-toolbelt ldd /usr/bin/loudgain
 ```
 
-Or run the Python REPL:
+Or run the Python REPL for inspecting python packages:
 
 ```
 docker run --rm -it media-toolbelt python
@@ -19,5 +19,5 @@ docker run --rm -it media-toolbelt python
 To build the image yourself:
 
 ```bash
-docker build -t media-toolbelt .
+docker buildx build -t media-toolbelt .
 ```

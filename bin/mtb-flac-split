@@ -1,0 +1,49 @@
+#!/usr/bin/env fish
+
+function flac-split
+    set flacfile $argv[1]
+    set cuefile $argv[2]
+
+    echo "🔪 Splitting '$flacfile' ..."
+
+    # split into separate FLACs
+    shnsplit -f $cuefile -o flac $flacfile
+    or begin
+        echo "❌ Failed to split FLAC."
+        return 1
+    end
+
+    # tagging and renaming (if cuetag is available)
+    if type -q cuetag.sh
+        # tag tracks according to metadata in cue file
+        cuetag.sh $cuefile split-track*.flac
+
+        # rename track files
+        for file in split-track*.flac
+            set track (metaflac --show-tag=TRACKNUMBER $file | string replace 'TRACKNUMBER=' '' | string replace -r '^0+' '')
+            set title (metaflac --show-tag=TITLE $file | string replace 'TITLE=' '')
+            set newname (printf "%02d %s.flac" $track $title)
+            mv -- "$file" "$newname"
+        end
+    else
+        echo "⚠️ cuetag not found – skipping tagging."
+    end
+end
+
+
+if test (count $argv) -ne 2
+    echo "Usage: flac-split <audio.flac> <tracklist.cue>"
+    return 1
+end
+
+if not test -f $argv[1]
+    echo "❌ FLAC file not found: $argv[1]"
+    return 1
+end
+
+if not test -f $argv[2]
+    echo "❌ CUE file not found: $argv[2]"
+    return 1
+end
+
+flac-split $argv[1] $argv[2]
