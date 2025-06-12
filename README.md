@@ -4,8 +4,6 @@
 
 ## Usage
 
-## Usage
-
 To run a tool, pass the command as arguments to the container. For example:
 
 ```bash
@@ -94,10 +92,8 @@ In addition to the specialized audio and video tools, **media-toolbelt** include
   > Note: Since `yazi` is an interactive terminal application, don't forget to pass `-it` to `docker run`:
   >
   > ```bash
-  > docker run --rm -it -v /mnt/user/media:/mnt media-toolbelt yazi /mnt
+  > docker run --rm -it -v .:/mnt ghcr.io/sniner/media-toolbelt yazi
   > ```
-
-These tools extend the scope of **media-toolbelt** beyond just media processing, making it a flexible general-purpose toolbox for command-line work.
 
 ## Included Scripts
 
