@@ -33,6 +33,10 @@ jobs:
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v6
+        env:
+          # Annotate the image index as well, not just the per-platform
+          # manifests -- the index is what describes a multi-arch image.
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
@@ -48,3 +52,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
