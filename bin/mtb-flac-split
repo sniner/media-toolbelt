@@ -14,9 +14,17 @@ function flac-split
     end
 
     # tagging and renaming (if cuetag is available)
-    if type -q cuetag.sh
+    # Debian ships the tool as "cuetag", Arch as "cuetag.sh"
+    set -l cuetag
+    if type -q cuetag
+        set cuetag cuetag
+    else if type -q cuetag.sh
+        set cuetag cuetag.sh
+    end
+
+    if test -n "$cuetag"
         # tag tracks according to metadata in cue file
-        cuetag.sh $cuefile split-track*.flac
+        $cuetag $cuefile split-track*.flac
 
         # rename track files
         for file in split-track*.flac

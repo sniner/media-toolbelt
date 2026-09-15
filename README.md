@@ -95,6 +95,8 @@ In addition to the specialized audio and video tools, **media-toolbelt** include
   > docker run --rm -it -v .:/mnt ghcr.io/sniner/media-toolbelt yazi
   > ```
 
+* `mc` – Midnight Commander, the classic two-pane file manager, for anyone who prefers it to `yazi`. Being interactive as well, it needs `-it` just the same.
+
 ## Included Scripts
 
 * `mtb-replaygain [--single|--all] <directory>`
