@@ -8,12 +8,13 @@ ARG DEBIAN_RELEASE=trixie
 # Stage 1: Builder (out-of-archive tools)
 # -----------------------------------
 # Almost everything in this image is packaged in Debian. This stage covers the
-# two exceptions: sacd_extract has no Debian package at all, and yazi is not in
-# the archive either, but upstream publishes static musl builds as .deb.
+# exceptions: sacd_extract has to be compiled, while yazi and fifi are taken
+# from their upstream releases as statically linked builds.
 FROM debian:${DEBIAN_RELEASE}-slim AS builder
 
 ARG SACD_RIPPER_VERSION=0.3.9.3
 ARG YAZI_VERSION=26.9.1
+ARG FIFI_VERSION=0.7.0
 ARG TARGETARCH
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -49,6 +50,16 @@ RUN case "${TARGETARCH}" in \
     && install -Dm755 /tmp/yazi/usr/bin/yazi /out/yazi \
     && install -Dm755 /tmp/yazi/usr/bin/ya /out/ya
 
+# 4) Fetch fifi, likewise a statically linked upstream release
+RUN case "${TARGETARCH}" in \
+        amd64) fifi_target=x86_64-linux-musl ;; \
+        arm64) fifi_target=aarch64-linux-musl ;; \
+        *) echo "no fifi build for TARGETARCH=${TARGETARCH}" >&2; exit 1 ;; \
+    esac \
+    && curl -fsSL -o /out/fifi \
+       "https://github.com/sniner/fifi/releases/download/v${FIFI_VERSION}/fifi-v${FIFI_VERSION}-${fifi_target}" \
+    && chmod 755 /out/fifi
+
 
 # -----------------------------------
 # Stage 2: Runtime (Debian image)
@@ -74,14 +85,14 @@ RUN apt-get update \
        loudgain shntool cuetools sndfile-programs \
        mediainfo mkvtoolnix \
        ripgrep fd-find fzf jq 7zip chafa poppler-utils glow \
-       mc libxml2-utils \
+       mc tree libxml2-utils \
     && rm -rf /var/lib/apt/lists/*
 
 # 3) Debian ships fd as "fdfind" to avoid a name clash; restore the usual name
 RUN ln -s /usr/bin/fdfind /usr/local/bin/fd
 
 # 4) Copy the tools built or fetched in the builder stage
-COPY --from=builder /out/sacd_extract /out/yazi /out/ya /usr/local/bin/
+COPY --from=builder /out/sacd_extract /out/yazi /out/ya /out/fifi /usr/local/bin/
 
 # 5) Copy scripts
 COPY --chmod=755 bin/ /usr/local/bin/

@@ -42,6 +42,36 @@ docker run --rm -it -v .:/mnt ghcr.io/sniner/media-toolbelt bash
 
 Both `bash` and `fish` are available.
 
+## Running on macOS
+
+On an Apple silicon Mac, no Docker installation is needed. Apple's own
+[`container`](https://github.com/apple/container) runs the very same image, and
+pulls the `arm64` variant so the tools run at native speed:
+
+```bash
+brew install container
+container system start
+```
+
+The first start asks whether to install the Linux kernel it runs containers
+with; say yes, or install it beforehand with `container system kernel set
+--recommended`.
+
+From there, every command above works with `container` in place of `docker`:
+
+```bash
+container run --rm -v .:/mnt ghcr.io/sniner/media-toolbelt mtb-replaygain "Eric Clapton/"
+container run --rm -it -v .:/mnt ghcr.io/sniner/media-toolbelt fish
+```
+
+Files written into the mounted directory belong to you afterwards, so tagging
+in place needs no `--user` gymnastics.
+
+One thing does not work here: `container` passes no devices into the container,
+which rules out everything that talks to a drive — `whipper`, `cdparanoia` and
+`sacd_extract` need a machine with the disc in it. Everything that works on
+files is unaffected.
+
 ## Notable Programs
 
 * `ffmpeg` – versatile audio/video encoder, converter and processing tool
@@ -96,6 +126,8 @@ In addition to the specialized audio and video tools, **media-toolbelt** include
   > ```
 
 * `mc` – Midnight Commander, the classic two-pane file manager, for anyone who prefers it to `yazi`. Being interactive as well, it needs `-it` just the same.
+* `tree` – prints a directory as a tree, handy for showing the shape of an album or a season folder at a glance
+* [`fifi`](https://github.com/sniner/fifi) – finds duplicate files by content, so a media library that grew over years can be checked for the same recording sitting in three places
 
 ## Included Scripts
 
