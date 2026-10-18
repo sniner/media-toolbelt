@@ -75,7 +75,7 @@ files is unaffected.
 ## Notable Programs
 
 * `ffmpeg` – versatile audio/video encoder, converter and processing tool
-* `loudgain` – ReplayGain 2.0 scanner and tagger
+* `rsgain` – ReplayGain 2.0 scanner and tagger
 * `whipper` – accurate audio CD ripper (Python-based)
 * `sacd_extract` – extracts audio from SACD images
 * `mutagen-inspect` – metadata viewer for audio files (based on [Mutagen](https://github.com/quodlibet/mutagen))

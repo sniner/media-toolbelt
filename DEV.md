@@ -5,7 +5,7 @@
 For inspecting dependencies inside the container:
 
 ```bash
-docker run --rm media-toolbelt ldd /usr/bin/loudgain
+docker run --rm media-toolbelt ldd /usr/bin/rsgain
 ```
 
 Or run the Python REPL for inspecting python packages:

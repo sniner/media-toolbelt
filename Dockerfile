@@ -68,6 +68,10 @@ FROM debian:${DEBIAN_RELEASE}-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Debian slim ships only the C.UTF-8 locale. Without LANG, fish sets
+# LC_CTYPE=en_US.UTF-8, and rsgain aborts on a locale that does not exist.
+ENV LANG=C.UTF-8
+
 # 1) fdkaac lives in non-free (the Fraunhofer FDK license is not DFSG-free)
 RUN sed -i 's/^Components:.*/Components: main contrib non-free/' \
        /etc/apt/sources.list.d/debian.sources
@@ -82,7 +86,7 @@ RUN apt-get update \
        python3-mutagen python3-musicbrainzngs \
        ffmpeg sox flac lame fdkaac \
        cdparanoia cd-discid libcdio-utils whipper \
-       loudgain shntool cuetools sndfile-programs \
+       rsgain shntool cuetools sndfile-programs \
        mediainfo mkvtoolnix \
        ripgrep fd-find fzf jq 7zip chafa poppler-utils glow \
        mc tree libxml2-utils \

@@ -31,7 +31,7 @@ if test "$mode" = "single"
         set files (fd -e flac -e mp3 -e m4a -t f -d 1 . $argv[1])
         if test (count $files) -gt 0
             echo "🎵 Processing album: $argv[1]"
-            loudgain --album --noclip --tagmode=e $files
+            rsgain custom --album --clip-mode=a --max-peak=-1 --true-peak --tagmode=i $files
         end
     end
 
@@ -47,7 +47,7 @@ else
     set files (fd -e flac -e mp3 -e m4a -t f . $path)
     if test (count $files) -gt 0
         echo "🎵 Processing multi-disc album: $path"
-        loudgain --album --noclip --tagmode=e $files
+        rsgain custom --album --clip-mode=a --max-peak=-1 --true-peak --tagmode=i $files
     else
         echo "⏭ No supported audio files found in: $argv[1]"
     end
